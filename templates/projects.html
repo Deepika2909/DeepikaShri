@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 154, 86, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff9a56, #ffce56, #26de81, #56ccf2);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .projects-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: pulseGlow 3s ease-in-out infinite alternate;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffce56;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .projects-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            transform: translateY(0);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: white;
+            line-height: 1.3;
+        }
+
+        .project-category {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffce56;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 206, 86, 0.3);
+        }
+
+        .project-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .github-btn {
+            background: linear-gradient(45deg, #24292e, #444d56);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .github-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(36, 41, 46, 0.3);
+            background: linear-gradient(45deg, #2f363d, #586069);
+        }
+
+        .demo-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+            background: linear-gradient(45deg, #ff5252, #ff7979);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #26de81, #20bf6b);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        /* Project specific gradients */
+        .ai-ml .project-icon { background: linear-gradient(45deg, #a29bfe, #6c5ce7); }
+        .computer-vision .project-icon { background: linear-gradient(45deg, #fd79a8, #e84393); }
+        .web-dev .project-icon { background: linear-gradient(45deg, #56ccf2, #2f80ed); }
+        .data-science .project-icon { background: linear-gradient(45deg, #26de81, #20bf6b); }
+        .mobile-app .project-icon { background: linear-gradient(45deg, #ff9a56, #ffce56); }
+
+        /* Animations */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-100px) translateX(50px);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 20px rgba(255, 206, 86, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(255, 206, 86, 0.4);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .projects-stats {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+            
+            .project-links {
+                flex-direction: column;
+            }
+            
+            .github-btn, .demo-btn {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .project-card {
+                padding: 20px;
+            }
+            
+            .project-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .project-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff9a56, #ffce56);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        .header h1 {
+                font-size: 2rem;
+            }
+        
+            header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid #e0c7df;
+    }
+     nav .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav .nav-links li a {
+      text-decoration: none;
+      color: #6b3074;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav .nav-links li a:hover {
+      color: #c71585;
+    }
+    @media screen and (max-width: 768px) {
+      nav .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+      }
+    }
+    </style>
+</head>
+<body>
+  <header>
+  <div class="logo">Deepika Shri N</div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('certification') }}">Certifications</a></li>
+      <li><a href="/education">Education</a></li>
+      <li><a href="/skills">Skills</a></li>
+      <li><a href="/experience">Experience</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+    <!-- Animated particles background -->
+    <div class="particles">
+        <!-- Particles will be generated by JavaScript -->
+    </div>
+
+    <div class="header">
+        <h1>My Project Showcase</h1>
+        <p>Innovative solutions in AI/ML, Computer Vision & Web Development</p>
+        
+        <div class="projects-stats">
+            <div class="stat-card">
+                <span class="stat-number">7</span>
+                <div class="stat-label">Projects</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">5</span>
+                <div class="stat-label">Technologies</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">100%</span>
+                <div class="stat-label">Open Source</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="projects-container">
+        <div class="projects-grid">
+            <!-- Sentiment Analysis Project -->
+            <div class="project-card ai-ml">
+                <div class="status-badge">Completed</div>
+                <div class="project-header">
+                    <div class="project-icon">🎯</div>
+                    <div class="project-title">Phone Call Sentiment Analysis</div>
+                </div>
+                <div class="project-category">AI/ML</div>
+                <div class="project-description">
+                    Advanced sentiment analysis system that processes phone call audio to determine emotional tone and customer satisfaction levels using natural language processing and machine learning techniques.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">NLP</span>
+                    <span class="tech-tag">Transformers</span>
+                    <span class="tech-tag">Audio Processing</span>
+                    <span class="tech-tag">Machine Learning</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/yourusername/sentiment-analysis-phone-call" class="github-btn" target="_blank">
+                        <span>⭐</span> GitHub
+                    </a>
+                    <a href="#" class="demo-btn">
+                        <span>🚀</span> Live Demo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Deepfake Detection Project -->
+            <div class="project-card computer-vision">
+                <div class="status-badge">Completed</div>
+                <div class="project-header">
+                    <div class="project-icon">🕵️</div>
+                    <div class="project-title">Deepfake Video Detection</div>
+                </div>
+                <div class="project-category">Computer Vision</div>
+                <div class="project-description">
+                    Sophisticated deep learning model that identifies manipulated videos and deepfake content using convolutional neural networks and temporal analysis techniques for media verification.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PyTorch</span>
+                    <span class="tech-tag">OpenCV</span>
+                    <span class="tech-tag">CNN</span>
+                    <span class="tech-tag">Computer Vision</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/yourusername/deepfake-detection" class="github-btn" target="_blank">
+                        <span>⭐</span> GitHub
+                    </a>
+                    <a href="#" class="demo-btn">
+                        <span>🚀</span> Live Demo
+                    </a>
+                </div>
+            </div>
+
+            <!-- E-commerce Website -->
+            <div class="project-card web-dev">
+                <div class="status-badge">Completed</div>
+                <div class="project-header">
+                    <div class="project-icon">🛍️</div>
+                    <div class="project-title">Puvanasmacrame E-commerce</div>
+                </div>
+                <div class="project-category">Web Development</div>
+                <div class="project-description">
+                    Full-featured e-commerce platform for handcrafted macrame products with secure payment integration, inventory management, and responsive design for optimal user experience.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Django</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">Payment Gateway</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/yourusername/puvanasmacrame-ecom" class="github-btn" target="_blank">
+                        <span>⭐</span> GitHub
+                    </a>
+                    <a href="#" class="demo-btn">
+                        <span>🚀</span> Live Demo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Geo Route Planner -->
+            <div class="project-card data-science">
+                <div class="status-badge">Completed</div>
+                <div class="project-header">
+                    <div class="project-icon">🗺️</div>
+                    <div class="project-title">Geo Route Planner</div>
+                </div>
+                <div class="project-category">Data Science</div>
+                <div class="project-description">
+                    Intelligent route optimization system using geospatial data and algorithms to find the most efficient paths, considering traffic patterns, distance, and time constraints.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Folium</span>
+                    <span class="tech-tag">GeoPandas</span>
+                    <span class="tech-tag">APIs</span>
+                    <span class="tech-tag">Data Analysis</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/yourusername/geo-route-planner" class="github-btn" target="_blank">
+                        <span>⭐</span> GitHub
+                    </a>
+                    <a href="#" class="demo-btn">
+                        <span>🚀</span> Live Demo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Keypoints Detection -->
+            <div class="project-card computer-vision">
+                <div class="status-badge">Completed</div>
+                <div class="project-header">
+                    <div class="project-icon">🎯</div>
+                    <div class="project-title">Keypoints Detection System</div>
+                </div>
+                <div class="project-category">Computer Vision</div>
+                <div class="project-description">
+                    Real-time human pose estimation and keypoint detection system using OpenCV and machine learning for applications in fitness tracking and motion analysis.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">OpenCV</span>
+                    <span class="tech-tag">MediaPipe</span>
+                    <span class="tech-tag">Computer Vision</span>
+                    <span class="tech-tag">Real-time Processing</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/yourusername/keypoints-detection-opencv" class="github-btn" target="_blank">
+                        <span>⭐</span> GitHub
+                    </a>
+                    <a href="#" class="demo-btn">
+                        <span>🚀</span> Live Demo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Todo Application -->
+            <div class="project-card web-dev">
+                <div class="status-badge">Completed</div>
+                <div class="project-header">
+                    <div class="project-icon">✅</div>
+                    <div class="project-title">Smart Todo Application</div>
+                </div>
+                <div class="project-category">Web Development</div>
+                <div class="project-description">
+                    Feature-rich task management application with priority sorting, deadline reminders, category organization, and progress tracking for enhanced productivity.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">MongoDB</span>
+                    <span class="tech-tag">REST API</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/yourusername/simple-todo-application" class="github-btn" target="_blank">
+                        <span>⭐</span> GitHub
+                    </a>
+                    <a href="#" class="demo-btn">
+                        <span>🚀</span> Live Demo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Volume Control with Hand Gesture -->
+            <div class="project-card computer-vision">
+                <div class="status-badge">Completed</div>
+                <div class="project-header">
+                    <div class="project-icon">🎵</div>
+                    <div class="project-title">Hand Gesture Volume Control</div>
+                </div>
+                <div class="project-category">Computer Vision</div>
+                <div class="project-description">
+                    Innovative computer vision application that controls system volume through hand gestures using OpenCV and MediaPipe for touchless interaction and accessibility.
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">OpenCV</span>
+                    <span class="tech-tag">MediaPipe</span>
+                    <span class="tech-tag">Hand Tracking</span>
+                    <span class="tech-tag">Gesture Recognition</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/yourusername/volume-control-hand-gesture" class="github-btn" target="_blank">
+                        <span>⭐</span> GitHub
+                    </a>
+                    <a href="#" class="demo-btn">
+                        <span>🚀</span> Live Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate animated particles
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random position
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                // Random animation delay and duration
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles
+        createParticles();
+
+        // Intersection Observer for project cards animation
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        // Set initial state and observe cards
+        projectCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+            card.style.transition = 'all 0.6s ease-out';
+            observer.observe(card);
+        });
+
+        // Enhanced hover effects for project cards
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02) rotateX(5deg)';
+                this.style.zIndex = '10';
+                
+                // Add glow effect
+                this.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 206, 86, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
+                this.style.zIndex = '1';
+                this.style.boxShadow = '';
+            });
+
+            // Click animation
+            card.addEventListener('click', function() {
+                this.style.transform = 'translateY(-15px) scale(0.98) rotateX(5deg)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-15px) scale(1.02) rotateX(5deg)';
+                }, 150);
+            });
+        });
+
+        // GitHub and Demo button interactions
+        document.querySelectorAll('.github-btn, .demo-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                
+                this.style.position = 'relative';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Parallax effect for background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            const particles = document.querySelector('.particles');
+            if (particles) {
+                particles.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Counter animation
+        const counters = document.querySelectorAll('.stat-number');
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = counter.textContent;
+                if (target.includes('%')) {
+                    const num = parseInt(target);
+                    let current = 0;
+                    const increment = num / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        counter.textContent = Math.floor(current) + '%';
+                        if (current >= num) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        }
+                    }, 40);
+                } else {
+                    const num = parseInt(target);
+                    let current = 0;
+                    const increment = num / 30;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        counter.textContent = Math.floor(current);
+                        if (current >= num) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        }
+                    }, 60);
+                }
+            });
+        };
+        // Start counter animation after page load
+        setTimeout(animateCounters, 1000);
+    </script>
+</body>
+</html>

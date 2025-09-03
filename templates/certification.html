@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certifications</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle, #f7f0ff, #ffe8f0);
+      color: #333;
+      font-family: "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Header + Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid #e0c7df;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #8a2be2;
+    }
+
+    nav .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav .nav-links li a {
+      text-decoration: none;
+      color: #6b3074;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav .nav-links li a:hover {
+      color: #c71585;
+    }
+
+    /* Particles */
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 12s infinite ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0.1; }
+      50% { transform: translateY(-80px) translateX(50px); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0); opacity: 0.1; }
+    }
+
+    /* Content Container */
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #8a2be2;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    /* Cards */
+    .card {
+      background: #fff6fc;
+      border: 2px dashed #eee;
+      padding: 20px 30px;
+      border-radius: 20px;
+      margin: 15px 0;
+      width: 90%;
+      max-width: 600px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card h2 {
+      color: #8a2be2;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #555;
+      background: #fff6fc;
+      border-top: 1px solid #eee;
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+      nav .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+      }
+    }
+
+    /* Modal Preview */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .modal img {
+      max-width: 80%;
+      max-height: 75vh;
+      border-radius: 10px;
+      box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+      animation: fadeIn 0.4s ease;
+      width: 75vw;
+      height: auto;
+    }
+
+    .modal-controls {
+      margin-top: 10px;
+    }
+
+    .modal-controls button {
+      font-size: 2rem;
+      padding: 0.4rem 1rem;
+      margin: 0 10px;
+      border: none;
+      background: #fff6fc;
+      color: #8a2be2;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .modal-controls button:hover {
+      background: #f0d6f6;
+    }
+
+    .close {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      font-size: 3rem;
+      color: #fff;
+      cursor: pointer;
+      z-index: 200;
+      background-color: rgba(0,0,0,0.4);
+      padding: 0 10px;
+      border-radius: 8px;
+      line-height: 1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with Menu -->
+  <header>
+  <div class="logo">Deepika Shri N</div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('certification') }}">Certifications</a></li>
+      <li><a href="/education">Education</a></li>
+      <li><a href="/skills">Skills</a></li>
+      <li><a href="/experience">Experience</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <!-- Floating particles -->
+  <div class="particle" style="top: 10%; left: 15%;"></div>
+  <div class="particle" style="top: 40%; left: 75%; animation-delay: 3s;"></div>
+  <div class="particle" style="top: 70%; left: 35%; animation-delay: 5s;"></div>
+  <div class="particle" style="top: 20%; left: 85%; animation-delay: 2s;"></div>
+
+  <!-- Modal Preview -->
+  <div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modalImage" src="" alt="Preview" />
+    <div class="modal-controls">
+      <button onclick="prevImage()">‹</button>
+      <button onclick="closeModal()">X</button>
+      <button onclick="nextImage()">›</button>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="container">
+    <h1>Certifications I Have 🌸</h1>
+
+    <!-- Single Image Example -->
+    <div class="card" onclick="openModal(['/static/certificates/nptel.png'])">
+      <h2>Python for Data Science - NPTEL</h2>
+      <p>Completed under Prof. Raghunathan (IIT Madras), covering Python, NumPy, and pandas.</p>
+    </div>
+
+    <div class="card" onclick="openModal(['/static/certificates/wipro.png'])">
+      <h2>Java Full Stack - Wipro</h2>
+      <p>Hands-on project development with backend/frontend tools and frameworks.</p>
+    </div>
+
+    <!-- Multiple Images Example -->
+    <div class="card" onclick="openModal([
+      '/static/certificates/conference2.jpg',
+      '/static/certificates/conference21.jpg',
+      '/static/certificates/conference22.jpg'
+    ])">
+      <h2>International Conference 2</h2>
+      <p>Face-Swap Based Fake Videos at ICESM 2025</p>
+    </div>
+
+    <div class="card" onclick="openModal(['/static/certificates/microsoft.jpg'])">
+      <h2>Microsoft Certified: Azure Fundamentals</h2>
+      <p>Earned Microsoft Azure Fundamentals certification validating core cloud service knowledge.</p>
+    </div>
+
+    <!-- Add other cards similarly -->
+    <div class="card" onclick="openModal([
+      '/static/certificates/ideathon1.jpg',
+      '/static/certificates/ideathon2.jpg'
+    ])">
+      <h2>Ideathon Presentation – NEC College</h2>
+      <p>Showcased innovative solution at NEC Ideathon, highlighting creative problem-solving.</p>
+    </div>
+
+    <div class="card" onclick="openModal([
+      '/static/certificates/spaceapp1.jpg',
+      '/static/certificates/spaceapp2.jpg',
+      '/static/certificates/spaceapp3.jpg'
+    ])">
+      <h2>NASA SpaceApp Challenge</h2>
+      <p>Contributed to global NASA challenge, solving real-world space-related problems.</p>
+    </div>
+
+    <div class="card" onclick="openModal(['/static/certificates/rakshin2.jpg'])">
+      <h2>Level 2 Certified – The Rakshin Project</h2>
+      <p>Certified in preventing child sexual abuse through awareness and intervention training.</p>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    Built with love, pastel vibes, and flower-powered imagination 🌸 | &copy; 2025 Deepika Shri N
+  </footer>
+
+  <!-- JS Modal Logic -->
+  <script>
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "Escape") closeModal();
+    });
+
+    let currentImageIndex = 0;
+    let imageList = [];
+
+    function openModal(images) {
+      imageList = images;
+      currentImageIndex = 0;
+      document.getElementById('modalImage').src = imageList[currentImageIndex];
+      document.getElementById('imageModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+
+    function nextImage() {
+      currentImageIndex = (currentImageIndex + 1) % imageList.length;
+      document.getElementById('modalImage').src = imageList[currentImageIndex];
+    }
+
+    function prevImage() {
+      currentImageIndex = (currentImageIndex - 1 + imageList.length) % imageList.length;
+      document.getElementById('modalImage').src = imageList[currentImageIndex];
+    }
+  </script>
+</body>
+</html>

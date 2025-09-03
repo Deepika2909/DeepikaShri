@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Skills Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff9a56, #ffce56);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .skills-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            animation: bounceIn 1s ease-out;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffce56;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .skills-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .skills-section {
+            margin-bottom: 50px;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, #ff9a56, #56ccf2);
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 0 20px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: skillAppear 0.6s ease-out forwards;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .skill-card:hover::before {
+            left: 100%;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            font-size: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .skill-level {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .skill-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 2s ease-out;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Skill Categories Colors */
+        .programming .skill-icon { background: linear-gradient(45deg, #ff9a56, #ffce56); }
+        .frameworks .skill-icon { background: linear-gradient(45deg, #56ccf2, #2f80ed); }
+        .tools .skill-icon { background: linear-gradient(45deg, #26de81, #20bf6b); }
+        .ml-dl .skill-icon { background: linear-gradient(45deg, #a29bfe, #6c5ce7); }
+        .specializations .skill-icon { background: linear-gradient(45deg, #fd79a8, #e84393); }
+
+        .programming .progress-bar { background: linear-gradient(45deg, #ff9a56, #ffce56); }
+        .frameworks .progress-bar { background: linear-gradient(45deg, #56ccf2, #2f80ed); }
+        .tools .progress-bar { background: linear-gradient(45deg, #26de81, #20bf6b); }
+        .ml-dl .progress-bar { background: linear-gradient(45deg, #a29bfe, #6c5ce7); }
+        .specializations .progress-bar { background: linear-gradient(45deg, #fd79a8, #e84393); }
+
+        .experience-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffce56;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 206, 86, 0.3);
+        }
+
+        /* Floating background elements */
+        .bg-element {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .bg-element:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            background: #ff9a56;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .bg-element:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            background: #56ccf2;
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .bg-element:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            background: #26de81;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 10s;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes skillAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(255, 154, 86, 0.5);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(255, 206, 86, 0.8);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-30px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(30px) rotate(240deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            
+            .skills-stats {
+                gap: 20px;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skill-card {
+                padding: 20px;
+            }
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff9a56, #ffce56);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        .header h1 {
+                font-size: 2rem;
+            }
+        
+            header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid #e0c7df;
+    }
+     nav .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav .nav-links li a {
+      text-decoration: none;
+      color: #6b3074;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav .nav-links li a:hover {
+      color: #c71585;
+    }
+    @media screen and (max-width: 768px) {
+      nav .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+      }
+    }
+    </style>
+</head>
+<body>
+  <header>
+  <div class="logo">Deepika Shri N</div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('certification') }}">Certifications</a></li>
+      <li><a href="/education">Education</a></li>
+      <li><a href="/skills">Skills</a></li>
+      <li><a href="/experience">Experience</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+    <!-- Background floating elements -->
+    <div class="bg-element"></div>
+    <div class="bg-element"></div>
+    <div class="bg-element"></div>
+
+    <div class="header">
+        <h1>My Technical Arsenal</h1>
+        <p>Comprehensive skills in Data Science, Machine Learning & Full-Stack Development</p>
+        
+        <div class="skills-stats">
+            <div class="stat-item">
+                <div class="stat-number" data-target="25">0</div>
+                <div class="stat-label">Technologies</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="5">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="2">0</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="skills-container">
+        <!-- Programming Languages -->
+        <div class="skills-section programming">
+            <h2 class="section-title">Programming Languages</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🐍</div>
+                    <div class="skill-name">Python</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 95%"></div>
+                    </div>
+                    <span class="experience-tag">3+ years</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <div class="skill-name">R</div>
+                    <div class="skill-level">Intermediate</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 80%"></div>
+                    </div>
+                    <span class="experience-tag">2+ years</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🗄️</div>
+                    <div class="skill-name">SQL</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 90%"></div>
+                    </div>
+                    <span class="experience-tag">DDL, DML</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Frameworks & Libraries -->
+        <div class="skills-section frameworks">
+            <h2 class="section-title">Frameworks & Libraries</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <div class="skill-name">Django</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 90%"></div>
+                    </div>
+                    <span class="experience-tag">Web Framework</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <div class="skill-name">Flask</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 88%"></div>
+                    </div>
+                    <span class="experience-tag">Microframework</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🚀</div>
+                    <div class="skill-name">FastAPI</div>
+                    <div class="skill-level">Intermediate</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 75%"></div>
+                    </div>
+                    <span class="experience-tag">API Development</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📈</div>
+                    <div class="skill-name">Streamlit</div>
+                    <div class="skill-level">Intermediate</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 70%"></div>
+                    </div>
+                    <span class="experience-tag">Data Apps</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Development Tools -->
+        <div class="skills-section tools">
+            <h2 class="section-title">Development Tools</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🐍</div>
+                    <div class="skill-name">PyCharm</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 92%"></div>
+                    </div>
+                    <span class="experience-tag">IDE</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <div class="skill-name">Tableau</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 85%"></div>
+                    </div>
+                    <span class="experience-tag">Data Viz</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <div class="skill-name">Power BI</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 83%"></div>
+                    </div>
+                    <span class="experience-tag">Business Intelligence</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Machine Learning & Deep Learning -->
+        <div class="skills-section ml-dl">
+            <h2 class="section-title">ML/DL Frameworks</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🔥</div>
+                    <div class="skill-name">PyTorch</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 90%"></div>
+                    </div>
+                    <span class="experience-tag">Deep Learning</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🤖</div>
+                    <div class="skill-name">TensorFlow</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 88%"></div>
+                    </div>
+                    <span class="experience-tag">ML/DL</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🧠</div>
+                    <div class="skill-name">Keras</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 85%"></div>
+                    </div>
+                    <span class="experience-tag">Neural Networks</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <div class="skill-name">Scikit-learn</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 93%"></div>
+                    </div>
+                    <span class="experience-tag">Classical ML</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔢</div>
+                    <div class="skill-name">NumPy</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 95%"></div>
+                    </div>
+                    <span class="experience-tag">Numerical Computing</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🐼</div>
+                    <div class="skill-name">Pandas</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 95%"></div>
+                    </div>
+                    <span class="experience-tag">Data Manipulation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Specializations -->
+        <div class="skills-section specializations">
+            <h2 class="section-title">Specialized Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">👁️</div>
+                    <div class="skill-name">Computer Vision</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 87%"></div>
+                    </div>
+                    <span class="experience-tag">OpenCV</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">💬</div>
+                    <div class="skill-name">NLP</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 85%"></div>
+                    </div>
+                    <span class="experience-tag">Transformers</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📈</div>
+                    <div class="skill-name">Time Series</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 82%"></div>
+                    </div>
+                    <span class="experience-tag">Forecasting</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔄</div>
+                    <div class="skill-name">Transfer Learning</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 80%"></div>
+                    </div>
+                    <span class="experience-tag">Pre-trained Models</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🏗️</div>
+                    <div class="skill-name">CNN</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 88%"></div>
+                    </div>
+                    <span class="experience-tag">Deep Learning</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔄</div>
+                    <div class="skill-name">RNN/LSTM</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 85%"></div>
+                    </div>
+                    <span class="experience-tag">Sequential Data</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">👤</div>
+                    <div class="skill-name">Face Recognition</div>
+                    <div class="skill-level">Intermediate</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 75%"></div>
+                    </div>
+                    <span class="experience-tag">Computer Vision</span>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🚀</div>
+                    <div class="skill-name">Model Deployment</div>
+                    <div class="skill-level">Advanced</div>
+                    <div class="skill-progress">
+                        <div class="progress-bar" style="width: 82%"></div>
+                    </div>
+                    <span class="experience-tag">Production Ready</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate progress bars on scroll
+        const observeSkills = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.progress-bar');
+                    progressBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 200);
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.skills-section').forEach(section => {
+            observeSkills.observe(section);
+        });
+
+        // Animate skill cards on scroll
+        const skillCards = document.querySelectorAll('.skill-card');
+        skillCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        // Counter animation for stats
+        const counters = document.querySelectorAll('.stat-number');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                counter.textContent = Math.floor(current);
+                if (current >= target) {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 40);
+        });
+
+        // Interactive skill cards
+        document.querySelectorAll('.skill-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.05) rotateX(10deg)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
+            });
+
+            card.addEventListener('click', function() {
+                const skillName = this.querySelector('.skill-name').textContent;
+                
+                // Create a temporary highlight effect
+                this.style.boxShadow = '0 0 30px rgba(255, 206, 86, 0.6)';
+                this.style.borderColor = '#ffce56';
+                
+                setTimeout(() => {
+                    this.style.boxShadow = '';
+                    this.style.borderColor = '';
+                }, 1000);
+                
+                console.log(`${skillName} skill clicked!`);
+            });
+        });
+
+        // Parallax effect for background elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const bgElements = document.querySelectorAll('.bg-element');
+            
+            bgElements.forEach((element, index) => {
+                const speed = (index + 1) * 0.05;
+                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+            });
+        });
+    </script>
+</body>
+</html>

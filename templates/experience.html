@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Professional Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated DNA Helix Background */
+        .dna-background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(255, 154, 86, 0.3), transparent);
+            animation: dnaRotate 20s linear infinite;
+        }
+
+        .dna-strand:nth-child(1) { left: 20%; animation-delay: 0s; }
+        .dna-strand:nth-child(2) { left: 40%; animation-delay: 5s; }
+        .dna-strand:nth-child(3) { left: 60%; animation-delay: 10s; }
+        .dna-strand:nth-child(4) { left: 80%; animation-delay: 15s; }
+
+        .dna-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff9a56;
+            border-radius: 50%;
+            animation: particleFloat 15s infinite ease-in-out;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 154, 86, 0.2), transparent);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .header h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff9a56, #ffce56, #56ccf2, #26de81);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientWave 6s ease-in-out infinite;
+            position: relative;
+            z-index: 3;
+        }
+
+        .header p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .experience-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-orb {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            animation: orbFloat 6s ease-in-out infinite;
+        }
+
+        .stat-orb:nth-child(1) { animation-delay: 0s; }
+        .stat-orb:nth-child(2) { animation-delay: 2s; }
+        .stat-orb:nth-child(3) { animation-delay: 4s; }
+
+        .stat-orb:hover {
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: #ffce56;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffce56;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-align: center;
+        }
+
+        /* Journey Container */
+        .journey-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+        }
+
+        /* Animated Journey Path */
+        .journey-path {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(to bottom, #ff9a56, #56ccf2, #26de81, #a29bfe, #fd79a8);
+            transform: translateX(-50%);
+            border-radius: 3px;
+            animation: pathGrow 3s ease-out;
+        }
+
+        .journey-path::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -2px;
+            width: 10px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(255, 154, 86, 0.3), 
+                rgba(86, 204, 242, 0.3), 
+                rgba(38, 222, 129, 0.3), 
+                rgba(162, 155, 254, 0.3), 
+                rgba(253, 121, 168, 0.3)
+            );
+            filter: blur(5px);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        /* Experience Cards */
+        .experience-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 100px;
+            position: relative;
+            opacity: 0;
+            animation: slideInExperience 0.8s ease-out forwards;
+        }
+
+        .experience-item:nth-child(1) { animation-delay: 0.5s; }
+        .experience-item:nth-child(2) { animation-delay: 1s; }
+        .experience-item:nth-child(3) { animation-delay: 1.5s; }
+        .experience-item:nth-child(4) { animation-delay: 2s; }
+
+        .experience-item.left {
+            flex-direction: row;
+        }
+
+        .experience-item.right {
+            flex-direction: row-reverse;
+        }
+
+        .experience-card {
+            flex: 1;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 35px;
+            margin: 0 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s;
+        }
+
+        .experience-card:hover::before {
+            left: 100%;
+        }
+
+        .experience-card:hover {
+            transform: scale(1.05) translateY(-15px) rotateX(10deg);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Company Icon */
+        .company-icon {
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: all 0.4s ease;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .experience-card:hover .company-icon {
+            transform: rotate(360deg) scale(1.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Experience Content */
+        .experience-content {
+            margin-top: 20px;
+        }
+
+        .job-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .company-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .duration {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffce56;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 206, 86, 0.3);
+        }
+
+        .job-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .skills-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .skill-chip {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-chip:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .achievements {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid;
+            margin-top: 15px;
+        }
+
+        .achievements h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #ffce56;
+        }
+
+        .achievements ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .achievements li {
+            padding: 5px 0;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .achievements li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            top: 5px;
+        }
+
+        /* Journey Marker */
+        .journey-marker {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 4px solid white;
+            z-index: 5;
+            animation: markerPulse 3s ease-in-out infinite;
+        }
+
+        /* Color themes for different experiences */
+        .internship .company-icon { background: linear-gradient(45deg, #ff9a56, #ffce56); }
+        .internship .achievements { border-left-color: #ff9a56; }
+
+        .freelance .company-icon { background: linear-gradient(45deg, #56ccf2, #2f80ed); }
+        .freelance .achievements { border-left-color: #56ccf2; }
+
+        .fulltime .company-icon { background: linear-gradient(45deg, #26de81, #20bf6b); }
+        .fulltime .achievements { border-left-color: #26de81; }
+
+        .project .company-icon { background: linear-gradient(45deg, #a29bfe, #6c5ce7); }
+        .project .achievements { border-left-color: #a29bfe; }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            pointer-events: none;
+            animation: floatRandom 20s linear infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            font-size: 2rem;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            font-size: 1.5rem;
+            animation-delay: 5s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            font-size: 2.5rem;
+            animation-delay: 10s;
+        }
+
+        /* Animations */
+        @keyframes gradientWave {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 50% 100%; }
+            75% { background-position: 100% 0%; }
+        }
+
+        @keyframes dnaRotate {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            50% {
+                transform: translateY(-150px) translateX(50px);
+                opacity: 0.8;
+            }
+            90% { opacity: 1; }
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pathGrow {
+            from { height: 0; }
+            to { height: 100%; }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes slideInExperience {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .experience-item.right {
+            animation: slideInExperienceRight 0.8s ease-out forwards;
+            animation-delay: inherit;
+        }
+
+        @keyframes slideInExperienceRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes markerPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.3; }
+            50% { transform: translateX(-50%) scale(1.1); opacity: 0.6; }
+        }
+
+        @keyframes floatRandom {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate(50px, -30px) rotate(90deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translate(-30px, -60px) rotate(180deg);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translate(-60px, 20px) rotate(270deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            
+            .experience-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+            
+            .experience-item,
+            .experience-item.right {
+                flex-direction: column !important;
+                text-align: center;
+            }          
+            .journey-path {
+                left: 30px;
+                transform: none;
+            }
+            .journey-marker {
+                left: 30px;
+                transform: translateY(-50%);
+            }
+            
+            .experience-card {
+                margin: 20px 0;
+                max-width: none;
+            }
+            
+            .journey-container {
+                padding: 0 20px;
+            }
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff9a56, #ffce56);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        .header h1 {
+                font-size: 2rem;
+            }
+        
+            header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid #e0c7df;
+    }
+     nav .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav .nav-links li a {
+      text-decoration: none;
+      color: #6b3074;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav .nav-links li a:hover {
+      color: #c71585;
+    }
+    @media screen and (max-width: 768px) {
+      nav .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+      }
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #8a2be2;
+    }
+    </style>
+</head>
+<body>
+      <header>
+  <div class="logo">Deepika Shri N</div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('certification') }}">Certifications</a></li>
+      <li><a href="/education">Education</a></li>
+      <li><a href="/skills">Skills</a></li>
+      <li><a href="/experience">Experience</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <!-- DNA Background Animation -->
+    <div class="dna-background">
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
+        <!-- DNA Particles -->
+        <div class="dna-particle" style="left: 15%; top: 20%; animation-delay: 0s;"></div>
+        <div class="dna-particle" style="left: 35%; top: 40%; animation-delay: 3s;"></div>
+        <div class="dna-particle" style="left: 55%; top: 60%; animation-delay: 6s;"></div>
+        <div class="dna-particle" style="left: 75%; top: 30%; animation-delay: 9s;"></div>
+        <div class="dna-particle" style="left: 85%; top: 70%; animation-delay: 12s;"></div>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="floating-element">💼</div>
+    <div class="floating-element">🚀</div>
+    <div class="floating-element">⭐</div>
+
+    <div class="header">
+        <h1>Professional Journey</h1>
+        <p>Transforming ideas into innovative solutions through experience</p>
+        
+        <div class="experience-stats">
+            <div class="stat-orb">
+                <div class="stat-number" data-target="3">0.8</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-orb">
+                <div class="stat-number" data-target="8">10+</div>
+                <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-orb">
+                <div class="stat-number" data-target="15">15+</div>
+                <div class="stat-label">Technologies Used</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="journey-container">
+        <div class="journey-path"></div>
+
+        <!-- Experience 1: Current Role/Recent -->
+        <div class="experience-item left fulltime">
+            <div class="journey-marker" style="background: #26de81;"></div>
+            <div class="experience-card">
+                <div class="company-icon">🏢</div>
+                <div class="experience-content">
+                    <div class="job-title">AI Engineer Intern</div>
+                    <div class="company-name">HANA Florist POS</div>
+                    <div class="duration">Feb 2025 – Present</div>
+                    <div class="job-description">
+                        Worked on enhancing machine intelligence through the development of image generation models and optimization of pathfinding algorithms.
+                    </div>
+                    <div class="skills-used">
+                        <span class="skill-chip">Python</span>
+                        <span class="skill-chip">AI/ML Algorithms</span>
+                        <span class="skill-chip">Image Generation</span>
+                        <span class="skill-chip">Pathfinding Optimization</span>
+                        <span class="skill-chip">Performance Tuning</span>
+                    </div>
+                    <div class="achievements">
+                        <h4>🎯 Key Achievements</h4>
+                        <ul>
+                            <li>Successfully built AI-driven image generation models.</li>
+                            <li>Improved algorithmic performance by optimizing existing pathfinding logic.</li>
+                            <li>Contributed to real-time system improvements in AI model responsiveness.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience 2: Previous Role -->
+        <div class="experience-item right freelance">
+            <div class="journey-marker" style="background: #56ccf2;"></div>
+            <div class="experience-card">
+                <div class="company-icon">🌐</div>
+                <div class="experience-content">
+                    <div class="job-title">OpenCV Intern</div>
+                    <div class="company-name">Tarcin Robotics</div>
+                    <div class="duration">June 2023 – July 2023</div>
+                    <div class="job-description">
+                       Worked on computer vision projects using OpenCV to develop basic interactive applications based on real-time image processing.
+                    </div>
+                    <div class="skills-used">
+                        <span class="skill-chip">OpenCV</span>
+                        <span class="skill-chip">Python</span>
+                        <span class="skill-chip">Image Processing</span>
+                        <span class="skill-chip">Computer Vision</span>
+                        <span class="skill-chip">Object Detection</span>
+                    </div>
+                    <div class="achievements">
+                        <h4>🎯 Key Achievements</h4>
+                        <ul>
+                            <li>Developed a Virtual Calculator using hand gesture recognition.</li>
+                            <li>Created functional computer vision mini-projects demonstrating object tracking and gesture detection.</li>
+                            <li>Strengthened foundational knowledge of CV pipelines and live camera interfacing.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience 3: Internship -->
+        <div class="experience-item left internship">
+            <div class="journey-marker" style="background: #ff9a56;"></div>
+            <div class="experience-card">
+                <div class="company-icon">🎓</div>
+                <div class="experience-content">
+                    <div class="job-title">Data Science Intern</div>
+                    <div class="company-name">Futurik Technologies</div>
+                    <div class="duration">Dec 2022 – Jan 2023</div>
+                    <div class="job-description">
+                        Created and analyzed data models to support business insights and decisions, focusing on data wrangling and visualization.
+                    </div>
+                    <div class="skills-used">
+                        <span class="skill-chip">Python</span>
+                        <span class="skill-chip">Excel</span>
+                        <span class="skill-chip">Scikit-learn</span>
+                        <span class="skill-chip">Tableau</span>
+                        <span class="skill-chip">SQL</span>
+                        <span class="skill-chip">Data Modeling</span>
+                    </div>
+                    <div class="achievements">
+                        <h4>🎯 Key Achievements</h4>
+                        <ul>
+                            <li>Built insightful dashboards and reports for internal use.</li>
+                            <li>Improved efficiency of data analysis pipelines.</li>
+                            <li>Delivered actionable business intelligence by transforming raw data into meaningful visual insights.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Counter animation for stats orbs
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    counter.textContent = Math.floor(current);
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    }
+                }, 50);
+            });
+        }
+
+        // Intersection Observer for experience cards
+        const experienceItems = document.querySelectorAll('.experience-item');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        experienceItems.forEach(item => {
+            observer.observe(item);
+        });
+
+        // Enhanced card interactions
+        document.querySelectorAll('.experience-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05) translateY(-15px) rotateX(10deg) rotateY(5deg)';
+                
+                // Add magical sparkle effect
+                createSparkles(this);
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) translateY(0) rotateX(0deg) rotateY(0deg)';
+                
+                // Remove sparkles
+                const sparkles = this.querySelectorAll('.sparkle');
+                sparkles.forEach(sparkle => sparkle.remove());
+            });
+
+            card.addEventListener('click', function() {
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'rippleEffect 0.8s linear';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.marginLeft = '-10px';
+                ripple.style.marginTop = '-10px';
+                
+                this.style.position = 'relative';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 800);
+            });
+        });
+
+        // Create sparkle effect
+        function createSparkles(element) {
+            for (let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.position = 'absolute';
+                sparkle.style.width = '4px';
+                sparkle.style.height = '4px';
+                sparkle.style.background = '#ffce56';
+                sparkle.style.borderRadius = '50%';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animation = 'sparkleFloat 2s ease-out infinite';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+            }}
+            </script>
+    </body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zig-Zag Education Timeline</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: radial-gradient(circle, #f7f0ff, #ffe8f0);
+        color: #4b2e56;
+        overflow-x: hidden;
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .experience-section { 
+        padding: 100px 50px; 
+        max-width: 1200px; 
+        margin: 0 auto; 
+        position: relative; 
+    }
+
+    .section-title { 
+        font-size: 3rem; 
+        font-weight: 700; 
+        text-align: center; 
+        margin-bottom: 80px; 
+        background: linear-gradient(45deg, #8a2be2, #c71585); 
+        -webkit-background-clip: text; 
+        -webkit-text-fill-color: transparent; 
+    }
+
+    .timeline { position: relative; }
+
+    .timeline-item {
+        width: 45%;
+        margin: 50px 0;
+        opacity: 0;
+        transform: translateY(80px) scale(0.9);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+    .timeline-item.left { float: left; clear: both; text-align: right; }
+    .timeline-item.right { float: right; clear: both; text-align: left; }
+
+    .timeline-content {
+        background: #fff6fc;
+        border: 2px dashed #f3cce7;
+        border-radius: 20px;
+        padding: 30px;
+        cursor: pointer;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    .timeline-content:hover { 
+        transform: scale(1.05); 
+        box-shadow: 0 12px 30px rgba(199, 21, 133, 0.2); 
+    }
+
+    .job-title { 
+        font-size: 1.4rem; 
+        font-weight: 600; 
+        color: #8a2be2; 
+        margin-bottom: 5px; 
+    }
+    .company { 
+        font-size: 1.2rem; 
+        font-weight: 500; 
+        color: #6b3074; 
+        margin-bottom: 5px; 
+    }
+    .duration { 
+        font-size: 0.9rem; 
+        color: #666; 
+        margin-bottom: 15px; 
+    }
+
+    /* Connectors */
+    .connector {
+        position: absolute;
+        width: 200px;
+        height: 120px;
+        overflow: visible;
+        stroke: #c71585;
+        stroke-width: 3;
+        fill: none;
+        stroke-dasharray: 400;
+        stroke-dashoffset: 400;
+        transition: stroke-dashoffset 2s ease;
+    }
+    .connector.visible { stroke-dashoffset: 0; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .timeline-item, .timeline-item.left, .timeline-item.right { 
+            width: 100%; 
+            float: none; 
+            text-align: left; 
+        }
+        .connector { display: none; }
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid #e0c7df;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #8a2be2;
+    }
+    nav .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav .nav-links li a {
+      text-decoration: none;
+      color: #6b3074;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    nav .nav-links li a:hover {
+      color: #8a2be2;
+    }
+</style>
+</head>
+<body>
+      <header>
+  <div class="logo">Deepika Shri N</div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('certification') }}">Certifications</a></li>
+      <li><a href="/education">Education</a></li>
+      <li><a href="/skills">Skills</a></li>
+      <li><a href="/experience">Experience</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+    <section class="experience-section">
+        <h2 class="section-title">Educational Journey 🌸</h2>
+        <div class="timeline">
+
+            <!-- 1st card -->
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3 class="job-title">B.Tech in AI & Data Science</h3>
+                    <h4 class="company">Kamaraj College of Engineering</h4>
+                    <p class="duration">2021 - 2025</p>
+                    <p>Projects: Deepfake Detection, Sentiment Analysis, Gesture Calculator</p>
+                </div>
+            </div>
+
+            <!-- Connector 1: from right of card 1 to top of card 2 -->
+            <svg class="connector" style="left: 50%; top: 260px; transform: translateX(0);">
+                <path d="M0 0 H200 V120"></path>
+            </svg>
+
+            <!-- 2nd card -->
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h3 class="job-title">Higher Secondary</h3>
+                    <h4 class="company">KV NAL Campus, Bangalore</h4>
+                    <p class="duration">2019 - 2021</p>
+                    <p>Specialized in Maths, Physics, CS. Participated in coding competitions.</p>
+                </div>
+            </div>
+
+            <!-- Connector 2: from left of card 2 to top of card 3 -->
+            <svg class="connector" style="right: 50%; top: 540px; transform: translateX(0);">
+                <path d="M200 0 H0 V120"></path>
+            </svg>
+
+            <!-- 3rd card -->
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3 class="job-title">Secondary Education (10th)</h3>
+                    <h4 class="company">KV CRPF, Pallipuram</h4>
+                    <p class="duration">2018 - 2019</p>
+                    <p>Excelled in academics, science exhibitions, and tech interest.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+<script>
+    // Intersection Observer for cards and connectors
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.timeline-item, .connector').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
