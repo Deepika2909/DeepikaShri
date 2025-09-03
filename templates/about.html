@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - Deepika Shri N</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: radial-gradient(circle, #f7f0ff, #ffe8f0);
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #fff6fc;
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: #6b3074;
+      border-bottom: 1px solid #db92df;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #8a2be2;
+    }
+
+    nav .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav .nav-links li a {
+      text-decoration: none;
+      color: #6b3074;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    nav .nav-links li a:hover {
+      color: #8a2be2;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 182, 193, 0.5);
+      animation: float 10s infinite;
+      z-index: 0;
+    }
+
+    .particle:nth-child(1) { width: 15px; height: 15px; left: 10%; top: 20%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 10px; height: 10px; left: 50%; top: 80%; animation-delay: 2s; }
+    .particle:nth-child(3) { width: 20px; height: 20px; left: 70%; top: 10%; animation-delay: 4s; }
+    .particle:nth-child(4) { width: 8px; height: 8px; left: 90%; top: 60%; animation-delay: 6s; }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 0.7; }
+      50% { transform: translateY(-40px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.7; }
+    }
+
+    .about-container {
+      z-index: 1;
+      position: relative;
+      max-width: 900px;
+      margin: 80px auto;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      color: #8a2be2;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .about-content {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #4a235a;
+      text-align: justify;
+    }
+
+    .fun-facts {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .fact-card {
+      flex: 1 1 250px;
+      background: #fceaff;
+      border: 2px dashed #db92df;
+      border-radius: 16px;
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .fact-card:hover {
+      transform: scale(1.05) rotate(-1deg);
+      background: #fff0fa;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #555;
+      background: #fff6fc;
+      border-top: 1px solid #eee;
+    }
+    .typing {
+      border-right: .1em solid #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(40, end) forwards;
+      margin: auto;
+      font-size: 1.1rem;
+      color: #8a2be2;
+      justify-content: center;
+        align-items: center;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+
+  <header>
+  <div class="logo">Deepika Shri N</div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('certification') }}">Certifications</a></li>
+      <li><a href="/education">Education</a></li>
+      <li><a href="/skills">Skills</a></li>
+      <li><a href="/experience">Experience</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <div class="about-container">
+    <h1>About Me 🌸</h1>
+    <div class="typing-container">
+    <div class="typing">AI DEVELOPER | DATA SCIENTIST | ML ENGINEER | INNOVATION ENTHUSIAST</p></div></div>
+    <div class="about-content">
+      Hi, I'm Deepika Shri N — a passionate AI engineer who believes that technology is an art when touched with consciousness.  
+      With a strong foundation in data science, I’ve created AI projects that bring imagination to life, whether it's detecting fake profiles or building gesture-based calculators.
+
+      My journey is stitched with logic, creativity, and lots of curiosity. I don't just code—I craft, debug, dream, and deliver.
+    </div>
+
+    <div class="fun-facts">
+      <div class="fact-card">
+        💡 Loves blending AI with creativity
+      </div>
+      <div class="fact-card">
+        🎨 Believes design is as powerful as code
+      </div>
+      <div class="fact-card">
+        🌱 Growing every day, one model at a time
+      </div>
+    </div>
+  </div>
+  <footer>
+    Built with love, pastel vibes, and flower-powered imagination 🌸 | &copy; 2025 Deepika Shri N
+  </footer>
+</body>
+</html>
